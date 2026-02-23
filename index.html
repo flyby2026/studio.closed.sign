@@ -5,80 +5,72 @@
 <title>WIKD Studio Update</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- FUN FONTS -->
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 
 <style>
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
   height: 100vh;
+  width: 100vw;
   overflow: hidden;
   background: url("images/wikd-background.jpg") center center / cover no-repeat;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   text-align: center;
   cursor: none;
+  font-family: 'Anton', sans-serif;
 }
 
-/* Main container */
-#container {
-  width: 90%;
-}
-
-/* MASSIVE HEADLINE */
+/* MASSIVE TOP */
 #announcement {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 13vw; /* scales with screen */
-  color: #ff1a1a; /* RED */
-  letter-spacing: 6px;
+  font-size: 17vw;
+  color: #ff0000;
   line-height: 0.9;
-  text-shadow: 0 0 30px black;
-  animation: pulse 2s infinite alternate;
+  text-shadow: 0 0 50px black;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Subheadline */
+/* Sub line */
 #sub {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 4vw;
-  font-weight: 900;
-  color: #ffd600; /* YELLOW */
-  margin-bottom: 60px;
-  text-shadow: 0 0 25px black;
+  font-size: 6vw;
+  color: #ffd600;
+  text-shadow: 0 0 40px black;
 }
 
-/* DID YOU KNOW */
-#label {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 3vw;
-  font-weight: 900;
-  color: #00ff4c; /* GREEN */
-  margin-bottom: 20px;
-  text-shadow: 0 0 20px black;
-}
-
-/* FACT TEXT HUGE */
-#fact {
-  font-family: 'Montserrat', sans-serif;
+/* TIMER */
+#timer {
   font-size: 5vw;
-  font-weight: 900;
+  color: #00ff4c;
+  text-shadow: 0 0 40px black;
+  margin: 20px 0;
+}
+
+/* FACT SECTION */
+#factContainer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#fact {
+  font-size: 5vw;
   color: white;
-  line-height: 1.2;
-  text-shadow: 0 0 30px black;
-  transition: opacity 0.6s ease;
+  line-height: 1.1;
+  text-shadow: 0 0 40px black;
+  transition: opacity 0.5s ease;
 }
 
-/* Subtle glow animation */
-@keyframes pulse {
-  from { text-shadow: 0 0 20px rgba(0,0,0,0.9); }
-  to { text-shadow: 0 0 40px rgba(255,0,0,0.8); }
-}
-
-/* Fullscreen Prompt */
+/* Fullscreen prompt */
 #fullscreenPrompt {
   position: absolute;
   inset: 0;
@@ -87,7 +79,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Montserrat', sans-serif;
   font-size: 28px;
   z-index: 100;
 }
@@ -101,22 +92,61 @@ body {
   DOUBLE CLICK TO EXIT
 </div>
 
-<div id="container">
-  <div id="announcement">STUDIO CLOSED</div>
-  <div id="sub">FOR REMODELING 🚧</div>
-  <div id="label">DID YOU KNOW?</div>
+<div id="announcement">
+  STUDIO CLOSED
+</div>
+
+<div id="sub">
+  FOR REMODELING 🚧
+</div>
+
+<div id="timer">
+  OFF AIR FOR: 0 DAYS 00:00:00
+</div>
+
+<div id="factContainer">
   <div id="fact">Loading facts…</div>
 </div>
 
 <script>
+
+/* =========================
+   OFF AIR TIMER
+========================= */
+
+const startDate = new Date("2026-02-23T09:00:00-05:00"); // EST start
+const timerEl = document.getElementById("timer");
+
+function updateTimer() {
+  const now = new Date();
+  const diff = now - startDate;
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  timerEl.textContent =
+    `OFF AIR FOR: ${days} DAYS ` +
+    `${String(hours).padStart(2, "0")}:` +
+    `${String(minutes).padStart(2, "0")}:` +
+    `${String(seconds).padStart(2, "0")}`;
+}
+
+setInterval(updateTimer, 1000);
+updateTimer();
+
+/* =========================
+   FACT ROTATION
+========================= */
+
 const facts = [
-  "WIKD-LP broadcasts on 102.5 FM in Daytona Beach.",
-  "WIKD is entirely student-run.",
-  "The station first began FM broadcasting in 2005.",
-  "The callsign WIKD is pronounced 'Wicked.'",
-  "Students can host their own radio show each semester.",
-  "WIKD provides hands-on DJ and production training.",
-  "WIKD is part of the Embry-Riddle Student Government Association."
+  "WIKD BROADCASTS ON 102.5 FM IN DAYTONA BEACH.",
+  "WIKD IS ENTIRELY STUDENT-RUN.",
+  "THE CALLSIGN WIKD IS PRONOUNCED 'WICKED.'",
+  "WIKD FIRST BEGAN FM BROADCASTING IN 2005.",
+  "STUDENTS CAN HOST THEIR OWN RADIO SHOW EACH SEMESTER.",
+  "WIKD PROVIDES HANDS-ON DJ AND PRODUCTION TRAINING."
 ];
 
 const factEl = document.getElementById("fact");
@@ -127,7 +157,7 @@ function showFact(index) {
   setTimeout(() => {
     factEl.textContent = facts[index];
     factEl.style.opacity = 1;
-  }, 500);
+  }, 400);
 }
 
 function nextFact() {
@@ -136,9 +166,9 @@ function nextFact() {
 }
 
 showFact(current);
-setInterval(nextFact, 10000);
+setInterval(nextFact, 9000);
 
-/* Fullscreen controls */
+/* Fullscreen */
 document.addEventListener("click", () => {
   if (!document.fullscreenElement) {
     document.documentElement.requestFullscreen();
@@ -154,6 +184,7 @@ document.addEventListener("dblclick", () => {
 });
 
 document.addEventListener("contextmenu", e => e.preventDefault());
+
 </script>
 
 </body>
