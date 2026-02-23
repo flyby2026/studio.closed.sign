@@ -17,28 +17,10 @@ body {
   overflow: hidden;
   color: white;
   cursor: none;
-}
-
-/* Background Image */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
   background: url("images/wikd-background.jpg") center center / cover no-repeat;
-  filter: blur(6px) brightness(0.5);
-  z-index: -2;
 }
 
-/* Overlay gradient */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.9));
-  z-index: -1;
-}
-
-/* Main container */
+/* Main Layout */
 #container {
   height: 100vh;
   display: flex;
@@ -46,51 +28,53 @@ body::after {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 40px;
+  padding: 60px;
 }
 
-/* Big Announcement */
+/* BIG HEADLINE */
 #announcement {
-  font-size: 64px;
+  font-size: 90px;
   font-weight: 900;
-  letter-spacing: 2px;
-  color: #ff3b3b;
-  margin-bottom: 20px;
-  text-shadow: 0 0 20px rgba(255,0,0,0.6);
+  color: #ff1a1a; /* RED */
+  text-shadow: 0 0 25px rgba(0,0,0,0.9);
+  margin-bottom: 30px;
 }
 
-/* Subtext */
+/* Subheadline */
 #sub {
-  font-size: 28px;
-  margin-bottom: 40px;
-  color: #ffd600;
-  font-weight: 600;
+  font-size: 42px;
+  font-weight: 800;
+  color: #ffd600; /* YELLOW */
+  text-shadow: 0 0 20px rgba(0,0,0,0.9);
+  margin-bottom: 50px;
 }
 
-/* Facts */
+/* Fact Box */
 #factBox {
-  max-width: 70%;
+  max-width: 85%;
   transition: opacity 0.6s ease;
 }
 
 #label {
-  font-size: 22px;
-  color: #00e5ff;
-  margin-bottom: 10px;
-  letter-spacing: 1.5px;
+  font-size: 36px;
+  font-weight: 900;
+  color: #00ff4c; /* GREEN */
+  margin-bottom: 20px;
+  text-shadow: 0 0 20px rgba(0,0,0,0.9);
 }
 
 #fact {
-  font-size: 34px;
-  line-height: 1.4;
-  font-weight: 500;
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-shadow: 0 0 25px rgba(0,0,0,0.9);
 }
 
-/* Fullscreen prompt */
+/* Fullscreen Prompt */
 #fullscreenPrompt {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.9);
+  background: rgba(0,0,0,0.95);
   color: #ccc;
   display: flex;
   align-items: center;
@@ -112,11 +96,11 @@ body::after {
 <div id="container">
 
   <div id="announcement">
-    STUDIO CLOSED FOR REMODELING
+    STUDIO CLOSED
   </div>
 
   <div id="sub">
-    WE'RE BUILDING SOMETHING WIKD 🔥
+    FOR REMODELING 🚧
   </div>
 
   <div id="factBox">
@@ -128,10 +112,9 @@ body::after {
 
 <script>
 const facts = [
-  "WIKD-LP is the student-run radio station of Embry-Riddle Aeronautical University.",
-  "WIKD broadcasts on 102.5 FM in Daytona Beach.",
+  "WIKD-LP broadcasts on 102.5 FM in Daytona Beach.",
+  "WIKD is entirely student-run.",
   "The station first began FM broadcasting in 2005.",
-  "WIKD is entirely operated by students.",
   "The callsign WIKD is pronounced 'Wicked.'",
   "Students can host their own radio show each semester.",
   "WIKD provides hands-on DJ and production training.",
