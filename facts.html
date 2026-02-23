@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WIKD Studio Update</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+  font-family: Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  color: white;
+  cursor: none;
+}
+
+/* Background Image */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("images/wikd-background.jpg") center center / cover no-repeat;
+  filter: blur(6px) brightness(0.5);
+  z-index: -2;
+}
+
+/* Overlay gradient */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.9));
+  z-index: -1;
+}
+
+/* Main container */
+#container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+}
+
+/* Big Announcement */
+#announcement {
+  font-size: 64px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #ff3b3b;
+  margin-bottom: 20px;
+  text-shadow: 0 0 20px rgba(255,0,0,0.6);
+}
+
+/* Subtext */
+#sub {
+  font-size: 28px;
+  margin-bottom: 40px;
+  color: #ffd600;
+  font-weight: 600;
+}
+
+/* Facts */
+#factBox {
+  max-width: 70%;
+  transition: opacity 0.6s ease;
+}
+
+#label {
+  font-size: 22px;
+  color: #00e5ff;
+  margin-bottom: 10px;
+  letter-spacing: 1.5px;
+}
+
+#fact {
+  font-size: 34px;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+/* Fullscreen prompt */
+#fullscreenPrompt {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  z-index: 100;
+  text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<div id="fullscreenPrompt">
+  CLICK = ENTER FULLSCREEN<br>
+  DOUBLE CLICK = EXIT
+</div>
+
+<div id="container">
+
+  <div id="announcement">
+    STUDIO CLOSED FOR REMODELING
+  </div>
+
+  <div id="sub">
+    WE'RE BUILDING SOMETHING WIKD 🔥
+  </div>
+
+  <div id="factBox">
+    <div id="label">DID YOU KNOW?</div>
+    <div id="fact">Loading facts…</div>
+  </div>
+
+</div>
+
+<script>
+const facts = [
+  "WIKD-LP is the student-run radio station of Embry-Riddle Aeronautical University.",
+  "WIKD broadcasts on 102.5 FM in Daytona Beach.",
+  "The station first began FM broadcasting in 2005.",
+  "WIKD is entirely operated by students.",
+  "The callsign WIKD is pronounced 'Wicked.'",
+  "Students can host their own radio show each semester.",
+  "WIKD provides hands-on DJ and production training.",
+  "WIKD is part of the Embry-Riddle Student Government Association."
+];
+
+const factEl = document.getElementById("fact");
+const factBox = document.getElementById("factBox");
+
+let current = 0;
+
+function showFact(index) {
+  factBox.style.opacity = 0;
+  setTimeout(() => {
+    factEl.textContent = facts[index];
+    factBox.style.opacity = 1;
+  }, 600);
+}
+
+function nextFact() {
+  current = (current + 1) % facts.length;
+  showFact(current);
+}
+
+showFact(current);
+setInterval(nextFact, 10000);
+
+/* Fullscreen */
+document.addEventListener("click", () => {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+    document.getElementById("fullscreenPrompt").style.display = "none";
+  }
+});
+
+document.addEventListener("dblclick", () => {
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+    document.getElementById("fullscreenPrompt").style.display = "flex";
+  }
+});
+
+document.addEventListener("contextmenu", e => e.preventDefault());
+</script>
+
+</body>
+</html>
