@@ -25,34 +25,35 @@ body {
 
 /* TOP */
 #announcement {
-  font-size:16vw;
+  font-size:15vw;
   color:#ff0000;
   line-height:0.9;
-  text-shadow:0 0 50px black;
+  text-shadow:0 0 60px black;
 }
 
 /* MIDDLE */
 #sub {
   font-size:6vw;
   color:#ffd600;
-  text-shadow:0 0 40px black;
+  text-shadow:0 0 50px black;
 }
 
 /* HUGE TIMER */
 #timer {
   font-size:7vw;
   color:#00ff4c;
-  text-shadow:0 0 50px black;
-  margin:2vh 0;
+  text-shadow:0 0 60px black;
+  margin:1vh 0;
 }
 
-/* BOTTOM FACT */
+/* FACT */
 #fact {
-  font-size:4.5vw;
+  font-size:5vw;
   color:white;
-  text-shadow:0 0 40px black;
-  padding:2vh 5vw;
-  transition:opacity 0.5s ease;
+  text-shadow:0 0 60px black;
+  padding:1vh 5vw;
+  transition:opacity 0.4s ease;
+  line-height:1.1;
 }
 </style>
 </head>
@@ -67,7 +68,7 @@ body {
 <script>
 
 /* ======================
-   START TIME = TODAY 9AM EST
+   START TIME = TODAY 9AM
 ====================== */
 
 const now = new Date();
@@ -105,32 +106,59 @@ setInterval(updateTimer,1000);
 updateTimer();
 
 /* ======================
-   FACT ROTATION
+   MASSIVE FACT LIST
 ====================== */
 
 const facts = [
+
   "WIKD BROADCASTS ON 102.5 FM IN DAYTONA BEACH.",
   "WIKD IS ENTIRELY STUDENT-RUN.",
   "THE CALLSIGN WIKD IS PRONOUNCED 'WICKED.'",
   "WIKD FIRST BEGAN FM BROADCASTING IN 2005.",
-  "STUDENTS CAN HOST THEIR OWN RADIO SHOW EACH SEMESTER.",
-  "WIKD PROVIDES HANDS-ON DJ TRAINING."
+  "WIKD IS PART OF THE STUDENT GOVERNMENT ASSOCIATION.",
+  "WIKD IS ONE OF THE LAST TRUE FREE-FORMAT RADIO STATIONS.",
+  "WIKD IS HOME TO OVER 45 LIVE SHOWS A WEEK.",
+  "WIKD HAS 9 BOARD POSITIONS.",
+  "WIKD IS THE LARGEST SGA DIVISION.",
+  "WIKD IS THE SPIRIT OF DAYTONA BEACH.",
+  "WIKD PROVIDES HANDS-ON DJ TRAINING.",
+  "WIKD GIVES STUDENTS REAL BROADCAST EXPERIENCE.",
+  "WIKD SUPPORTS LOCAL EVENTS AND CAMPUS LIFE.",
+  "WIKD HAS TRAINED GENERATIONS OF BROADCASTERS.",
+  "WIKD IS BUILT BY STUDENTS, FOR STUDENTS.",
+
+  "DJ FLYBY LUVS U ALL <3",
+  "#NATELOVESODECK",
+  "I MIGHT BE BIASED BUT WIKD IS THE BEST SGA DIVISION.",
+  "IF YOU'RE READING THIS YOU SHOULD HOST A SHOW.",
+  "THE STUDIO MAY BE CLOSED BUT THE ENERGY ISN'T.",
+  "BIG THINGS ARE COMING.",
+  "REMODEL ERA ACTIVATED.",
+  "WIKD NEVER SLEEPS.",
+  "THE REBUILD WILL BE LEGENDARY.",
+  "THIS IS JUST A LEVEL UP.",
+  "WIKD 2.0 LOADING...",
+  "DAYTONA RUNS ON WIKD.",
+  "IF YOU KNOW YOU KNOW.",
+  "BOARD MEMBERS ARE BUILT DIFFERENT.",
+  "WE'LL BE BACK LOUDER."
 ];
 
+/* RANDOM ROTATION EVERY 20 SECONDS */
 const factEl = document.getElementById("fact");
-let currentFact = 0;
 
 function rotateFact() {
   factEl.style.opacity = 0;
+
   setTimeout(() => {
-    factEl.textContent = facts[currentFact];
+    const randomIndex = Math.floor(Math.random() * facts.length);
+    factEl.textContent = facts[randomIndex];
     factEl.style.opacity = 1;
-    currentFact = (currentFact + 1) % facts.length;
-  }, 400);
+  }, 300);
 }
 
 rotateFact();
-setInterval(rotateFact,9000);
+setInterval(rotateFact, 20000);
 
 </script>
 
