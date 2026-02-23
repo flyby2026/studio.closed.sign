@@ -1,125 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>WIKD Studio Update</title>
+<title>WIKD OFF AIR</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+* { margin:0; padding:0; box-sizing:border-box; }
 
 body {
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  background: url("images/wikd-background.jpg") center center / cover no-repeat;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  text-align: center;
-  cursor: none;
-  font-family: 'Anton', sans-serif;
+  height:100vh;
+  width:100vw;
+  overflow:hidden;
+  background:url("images/wikd-background.jpg") center center / cover no-repeat;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  text-align:center;
+  font-family:'Anton', sans-serif;
+  cursor:none;
 }
 
-/* MASSIVE TOP */
+/* TOP */
 #announcement {
-  font-size: 17vw;
-  color: #ff0000;
-  line-height: 0.9;
-  text-shadow: 0 0 50px black;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size:16vw;
+  color:#ff0000;
+  line-height:0.9;
+  text-shadow:0 0 50px black;
 }
 
-/* Sub line */
+/* MIDDLE */
 #sub {
-  font-size: 6vw;
-  color: #ffd600;
-  text-shadow: 0 0 40px black;
+  font-size:6vw;
+  color:#ffd600;
+  text-shadow:0 0 40px black;
 }
 
-/* TIMER */
+/* HUGE TIMER */
 #timer {
-  font-size: 5vw;
-  color: #00ff4c;
-  text-shadow: 0 0 40px black;
-  margin: 20px 0;
+  font-size:7vw;
+  color:#00ff4c;
+  text-shadow:0 0 50px black;
+  margin:2vh 0;
 }
 
-/* FACT SECTION */
-#factContainer {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
+/* BOTTOM FACT */
 #fact {
-  font-size: 5vw;
-  color: white;
-  line-height: 1.1;
-  text-shadow: 0 0 40px black;
-  transition: opacity 0.5s ease;
-}
-
-/* Fullscreen prompt */
-#fullscreenPrompt {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.95);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  z-index: 100;
+  font-size:4.5vw;
+  color:white;
+  text-shadow:0 0 40px black;
+  padding:2vh 5vw;
+  transition:opacity 0.5s ease;
 }
 </style>
 </head>
 
 <body>
 
-<div id="fullscreenPrompt">
-  CLICK TO ENTER FULLSCREEN<br>
-  DOUBLE CLICK TO EXIT
-</div>
-
-<div id="announcement">
-  STUDIO CLOSED
-</div>
-
-<div id="sub">
-  FOR REMODELING 🚧
-</div>
-
-<div id="timer">
-  OFF AIR FOR: 0 DAYS 00:00:00
-</div>
-
-<div id="factContainer">
-  <div id="fact">Loading facts…</div>
-</div>
+<div id="announcement">STUDIO CLOSED</div>
+<div id="sub">FOR REMODELING 🚧</div>
+<div id="timer">OFF AIR FOR: 0 DAYS 00:00:00</div>
+<div id="fact">Loading fact...</div>
 
 <script>
 
-/* =========================
-   OFF AIR TIMER
-========================= */
+/* ======================
+   START TIME = TODAY 9AM EST
+====================== */
 
-const startDate = new Date("2026-02-23T09:00:00-05:00"); // EST start
+const now = new Date();
+const startDate = new Date(
+  now.getFullYear(),
+  now.getMonth(),
+  now.getDate(),
+  9, 0, 0
+);
+
 const timerEl = document.getElementById("timer");
 
 function updateTimer() {
-  const now = new Date();
-  const diff = now - startDate;
+  const current = new Date();
+  const diff = current - startDate;
+
+  if (diff < 0) {
+    timerEl.textContent = "OFF AIR BEGINS AT 9:00 AM";
+    return;
+  }
 
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
@@ -128,17 +96,17 @@ function updateTimer() {
 
   timerEl.textContent =
     `OFF AIR FOR: ${days} DAYS ` +
-    `${String(hours).padStart(2, "0")}:` +
-    `${String(minutes).padStart(2, "0")}:` +
-    `${String(seconds).padStart(2, "0")}`;
+    `${String(hours).padStart(2,"0")}:` +
+    `${String(minutes).padStart(2,"0")}:` +
+    `${String(seconds).padStart(2,"0")}`;
 }
 
-setInterval(updateTimer, 1000);
+setInterval(updateTimer,1000);
 updateTimer();
 
-/* =========================
+/* ======================
    FACT ROTATION
-========================= */
+====================== */
 
 const facts = [
   "WIKD BROADCASTS ON 102.5 FM IN DAYTONA BEACH.",
@@ -146,44 +114,23 @@ const facts = [
   "THE CALLSIGN WIKD IS PRONOUNCED 'WICKED.'",
   "WIKD FIRST BEGAN FM BROADCASTING IN 2005.",
   "STUDENTS CAN HOST THEIR OWN RADIO SHOW EACH SEMESTER.",
-  "WIKD PROVIDES HANDS-ON DJ AND PRODUCTION TRAINING."
+  "WIKD PROVIDES HANDS-ON DJ TRAINING."
 ];
 
 const factEl = document.getElementById("fact");
-let current = 0;
+let currentFact = 0;
 
-function showFact(index) {
+function rotateFact() {
   factEl.style.opacity = 0;
   setTimeout(() => {
-    factEl.textContent = facts[index];
+    factEl.textContent = facts[currentFact];
     factEl.style.opacity = 1;
+    currentFact = (currentFact + 1) % facts.length;
   }, 400);
 }
 
-function nextFact() {
-  current = (current + 1) % facts.length;
-  showFact(current);
-}
-
-showFact(current);
-setInterval(nextFact, 9000);
-
-/* Fullscreen */
-document.addEventListener("click", () => {
-  if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen();
-    document.getElementById("fullscreenPrompt").style.display = "none";
-  }
-});
-
-document.addEventListener("dblclick", () => {
-  if (document.fullscreenElement) {
-    document.exitFullscreen();
-    document.getElementById("fullscreenPrompt").style.display = "flex";
-  }
-});
-
-document.addEventListener("contextmenu", e => e.preventDefault());
+rotateFact();
+setInterval(rotateFact,9000);
 
 </script>
 
